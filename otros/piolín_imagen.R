@@ -7,10 +7,7 @@ if(!require(magick)) {
 fondo = "#181818" # color del fondo
 porcentaje = 0.4 # tamaño de la imagen
 
-piolines <- c("https://cdn.pensador.com/es/imagenes/buenos-dias-con.jpg",
-              "https://cdn.pensador.com/es/imagenes/que-tu-cafe-este.jpg",
-              "https://cdn.pensador.com/es/imagenes/hoy-es-un-buen-dia.jpg")
-
+piolines <- list.files("imágenes", full.names = TRUE)
 piolín <- sample(piolines, 1)
 
 # obtener tamaño del panel

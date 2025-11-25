@@ -4,7 +4,7 @@
 
 Código e instrucciones para tener imágenes de saludo al inciar RStudio.
 
-Opciones 
+Opciones:
 - Bendiciones (piolín)
 - Gatitos via [Cats As a Service](https://cataas.com/)
 
@@ -28,49 +28,54 @@ setHook("rstudio.sessionInit", function(newSession) {
 }, action = "append")
 ```
 
-Luego poner dentro de lo anterior (donde dice _aquí_) el código de uno de los scripts:
-- `piolín_remoto.R`
-- `gato_remoto.R`
-Puedes ejecutar los scripts para previsualizar su resultado, y ajustar las opciones si deseas.
+Luego poner dentro de lo anterior (donde dice _aquí_) el código del script `saludito.R`.
 
-El contenido del `.RProfile` quedaría así:
+En la parte de `opciones`, puedes elegir entre `gatos` o `piolín`.
+
+Puedes ejecutar el script para previsualizar su resultado, y ajustar las opciones si deseas.
+
+El contenido del `.RProfile` quedaría así (puedes copiarlo y pegarlo todo para ahorrarte tiempo):
 
 ```r
 setHook("rstudio.sessionInit", function(newSession) {
   if (newSession) {
     
-    # cargar/instalar paquete
-    if (require(magick)) { 
-      library(magick)
-    } else {
-      install.packages("magick")
-      library(magick)
-    }
+    library(shiny)
     
     # opciones
-    fondo = "#181818" # color del fondo
-    porcentaje = 0.4 # tamaño de la imagen
+    saludito <- "gatos"
+    tamaño <- "60%"
+    fondo <- "#181818"
     
-    # elegir imagen
-    piolines <- list.files("imágenes", full.names = TRUE)
-    piolín <- sample(piolines, 1)
+    # escoger imagen
+    if (saludito %in% c("gato", "gatos")) {
+      imagen <- "https://cataas.com/cat"
+      
+    } else if (saludito %in% c("piolín", "piolin", "piolines")) {
+      piolines <- paste0("https://raw.githubusercontent.com/bastianolea/piolines/master/img/piolin_", 1:12, ".jpg")
+      imagen <- sample(piolines, 1)
+    }
     
-    # obtener tamaño del panel
-    tamaño <- dev.size("px")/2
+    # crear página en html
+    imagen <- tags$body(
+      style = paste("background-color:", fondo, "; display: flex; justify-content: center;"),
+      img(src = imagen, style = paste("max-height:", tamaño, "; margin: auto;"))
+    )
     
-    # achicar imagen
-    imagen <- image_read(piolín) |> image_resize(tamaño*porcentaje)
+    # crear archivo temporal
+    temporal <- tempfile(fileext = ".html")
     
-    # crear fondo
-    fondo <- image_blank(width = tamaño[1], height = tamaño[2], color = fondo)
+    # escribir la página al archivo temporal
+    writeLines(text = as.character(imagen), temporal)
     
-    # unir imagen y fondo
-    salida <- image_composite(fondo, imagen, gravity = "center")
+    # ver en Rstudio
+    rstudioapi::viewer(temporal)
     
-    print(salida, info = FALSE)
     
   }
 }, action = "append")
 ```
+
+Ahora cuando abras RStudio aparecerá una imagen al azar!
 
 
