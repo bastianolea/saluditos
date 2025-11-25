@@ -1,6 +1,6 @@
 ## Saluditos
 
-Código que te aparezcan imágenes al azar cuando abras RStudio.
+Código para que te aparezcan imágenes al azar cuando abras RStudio.
 
 **Opciones:**
 - Bendiciones de piolín
