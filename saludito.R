@@ -2,7 +2,7 @@ library(shiny)
 
 # opciones
 saludito <- "piolín"
-tamaño <- "60%"
+tamaño <- "70%"
 fondo <- "#181818"
 
 # escoger imagen
@@ -30,3 +30,6 @@ writeLines(text = as.character(imagen), temporal)
 
 # ver en Rstudio
 rstudioapi::viewer(temporal)
+
+# limpieza
+rm(temporal, imagen, fondo, tamaño, saludito, piolines)

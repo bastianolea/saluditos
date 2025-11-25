@@ -1,22 +1,26 @@
-
-
 ## Saluditos
 
-Código e instrucciones para tener imágenes de saludo al inciar RStudio.
+Código que te aparezcan imágenes al azar cuando abras RStudio.
 
-Opciones:
-- Bendiciones (piolín)
-- Gatitos via [Cats As a Service](https://cataas.com/)
+**Opciones:**
+- Bendiciones de piolín
+- Gatitos mediante la API [Cats As a Service](https://cataas.com/)
+
+![](otros/pantallazo.png)
+
 
 ### Instrucciones
 
-Editar el `.RProfile` con:
+Para hacer que aparezcan los saludos hay que editar el `.RProfile`, que es un script especial que se ejecuta automáticamente al abrir R. [Más información aquí.](https://bastianolea.rbind.io/blog/2025-11-25/)
+
+Edita tu `.RProfile` ejecutando:
 
 ```r
 usethis::edit_r_profile()
 ```
 
-Poner esto dentro del `.RProfile`:
+Se abrirá un script. Pon esto dentro del `.RProfile`:
+
 ```r
 # copiar esto y ponerlo en el .RProfile
 setHook("rstudio.sessionInit", function(newSession) {
@@ -28,11 +32,13 @@ setHook("rstudio.sessionInit", function(newSession) {
 }, action = "append")
 ```
 
-Luego poner dentro de lo anterior (donde dice _aquí_) el código del script `saludito.R`.
+Luego, pon dentro de lo anterior (donde dice _aquí_) el código del script `saludito.R`.
 
 En la parte de `opciones`, puedes elegir entre `gatos` o `piolín`.
 
-Puedes ejecutar el script para previsualizar su resultado, y ajustar las opciones si deseas.
+Puedes ejecutar el script `saludito.R` para previsualizar su resultado, y ajustar las opciones si deseas.
+
+Requiere que tengas instalado [Shiny](https://shiny.posit.co). Instálalo con `install.packages("shiny")` si no lo tienes.
 
 El contenido del `.RProfile` quedaría así (puedes copiarlo y pegarlo todo para ahorrarte tiempo):
 
@@ -43,15 +49,17 @@ setHook("rstudio.sessionInit", function(newSession) {
     library(shiny)
     
     # opciones
-    saludito <- "gatos"
-    tamaño <- "60%"
+    saludito <- "piolín"
+    tamaño <- "80%"
     fondo <- "#181818"
     
     # escoger imagen
     if (saludito %in% c("gato", "gatos")) {
+      # gatos
       imagen <- "https://cataas.com/cat"
       
     } else if (saludito %in% c("piolín", "piolin", "piolines")) {
+      # piolines
       piolines <- paste0("https://raw.githubusercontent.com/bastianolea/piolines/master/img/piolin_", 1:12, ".jpg")
       imagen <- sample(piolines, 1)
     }
@@ -71,11 +79,15 @@ setHook("rstudio.sessionInit", function(newSession) {
     # ver en Rstudio
     rstudioapi::viewer(temporal)
     
+    # limpieza
+    rm(temporal, imagen, fondo, tamaño, saludito, piolines)
     
   }
 }, action = "append")
 ```
 
 Ahora cuando abras RStudio aparecerá una imagen al azar!
+
+Que tengas un bello y bendecido día 🌸✨
 
 

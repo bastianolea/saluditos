@@ -5,8 +5,8 @@ setHook("rstudio.sessionInit", function(newSession) {
     library(shiny)
     
     # opciones
-    saludito <- "gatos"
-    tamaño <- "60%"
+    saludito <- "piolín"
+    tamaño <- "80%"
     fondo <- "#181818"
     
     # escoger imagen
@@ -34,6 +34,9 @@ setHook("rstudio.sessionInit", function(newSession) {
     
     # ver en Rstudio
     rstudioapi::viewer(temporal)
+    
+    # limpieza
+    rm(temporal, imagen, fondo, tamaño, saludito, piolines)
     
     
   }
