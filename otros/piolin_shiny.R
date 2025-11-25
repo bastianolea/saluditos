@@ -1,10 +1,10 @@
 
 library(shiny)
 
-temporal <- tempfile()
-filename <- system.file("img", piolín, temporal)
 
-imagen <- div(style = "width: 60%; margin: auto;",
+piolín <- "https://raw.githubusercontent.com/bastianolea/piolines/master/imágenes/piolin_1.jpg"
+
+imagen <- div(style = "width: 60%; margin: auto; background-color: black;",
     img(src = piolín)
 )
 
