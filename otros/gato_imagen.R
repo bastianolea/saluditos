@@ -15,7 +15,7 @@ gatito <- "https://cataas.com/cat"
 tamaño <- dev.size("px")/2
 
 # achicar imagen
-imagen <- image_read(piolín) |> image_resize(tamaño*porcentaje)
+imagen <- image_read(gatito) |> image_resize(tamaño*porcentaje)
 
 # crear fondo
 fondo <- image_blank(width = tamaño[1], height = tamaño[2], color = fondo)
